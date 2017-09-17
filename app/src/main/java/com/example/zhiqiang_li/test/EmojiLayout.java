@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,7 +124,7 @@ public class EmojiLayout extends LinearLayout implements OnTabSelectListener {
     private CheckedImageButton addCheckButton(int index ,OnClickListener onClickListener){
         CheckedImageButton emotBtn = new CheckedImageButton(context);
 
-       container.addView(emotBtn);
+        container.addView(emotBtn);
         emotBtn.setNormalBkResId(R.drawable.nim_sticker_button_background_normal_layer_list);
         emotBtn.setCheckedBkResId(R.drawable.nim_sticker_button_background_pressed_layer_list);
         emotBtn.setId(index);
@@ -185,7 +184,6 @@ public class EmojiLayout extends LinearLayout implements OnTabSelectListener {
 
     @Override
     public void onTabSelect(int position) {
-        Log.d(TAG, "onTabSelect: "+position);
         viewpager.setCurrentItem(position);
     }
 

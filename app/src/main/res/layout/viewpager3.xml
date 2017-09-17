@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <SeekBar
-        android:id="@+id/seekBar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+
+        <com.example.zhiqiang_li.test.ATCircleView
+            android:id="@+id/atcv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>

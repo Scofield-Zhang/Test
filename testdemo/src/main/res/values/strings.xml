@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TestDemo</string>
+    <string name="name">姓名</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ATCircleView">
+        <attr name="isStroke" format="boolean"/>
+        <attr name="radius" format="dimension"/>
+        <attr name="strokeColor" format="color"/>
+        <attr name="strokeWidth" format="dimension"/>
+        <attr name="solidColor" format="color"/>
+
+
+    </declare-styleable>
+</resources>
