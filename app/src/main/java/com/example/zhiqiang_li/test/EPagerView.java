@@ -6,17 +6,19 @@ import android.database.Cursor;
 import android.media.ExifInterface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.IdRes;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +33,7 @@ import java.util.List;
  * Created by Zhiqiang_Li on 2017/9/7.
  */
 
-public class EPagerView  implements LoaderManager.LoaderCallbacks<Cursor>{
+public class EPagerView implements LoaderManager.LoaderCallbacks<Cursor> {
 
 
     private Context context;
@@ -116,19 +118,47 @@ public class EPagerView  implements LoaderManager.LoaderCallbacks<Cursor>{
                     break;
                 case 2:
                     obtainCamera(child);
-
                     break;
                 case 3:
-                    SeekBar seekBar = (SeekBar) child.findViewById(R.id.seekBar);
-                    atcv = (ATCircleView) child.findViewById(R.id.atcv);
-                    seekBar.setOnSeekBarChangeListener(onSeekBarChangeListener);
-
+                    viewPagerPanel(child);
                     break;
             }
 
 
             return pagerList.get(position);
         }
+
+        private void viewPagerPanel(View child) {
+            SeekBar seekBar = (SeekBar) child.findViewById(R.id.seekBar);
+            atcv = (ATCircleView) child.findViewById(R.id.atcv);
+            seekBar.setOnSeekBarChangeListener(onSeekBarChangeListener);
+            RadioGroup radioGroup = (RadioGroup) child.findViewById(R.id.rg);
+            radioGroup.setOnCheckedChangeListener(onCheckedListener);
+
+        }
+
+        private RadioGroup.OnCheckedChangeListener onCheckedListener = new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_free_line:
+
+                        break;
+                    case R.id.rb_horizontal:
+
+                        break;
+                    case R.id.rb_vertical:
+
+                        break;
+                    case R.id.rb_diagonal:
+
+                        break;
+                    case R.id.rb_kaleidoscope:
+
+                        break;
+                }
+            }
+        };
 
         private SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -153,40 +183,46 @@ public class EPagerView  implements LoaderManager.LoaderCallbacks<Cursor>{
         }
     }
 
-    private static final String cameraPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath() + File.separator + "Camera";
+    private static final String cameraPath = Environment.getExternalStoragePublicDirectory(Environment.
+            DIRECTORY_DCIM).getAbsolutePath() + File.separator + "Camera";
 
-    private void obtainCamera(View child) {
+    private void obtainCamera(final View child) {
         photoBeen = new ArrayList<>();
-        RecyclerView recycler= (RecyclerView) child.findViewById(R.id.recycler);
-        recycler.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
+        RecyclerView recycler = (RecyclerView) child.findViewById(R.id.recycler);
+        recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
+        // recycler.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.VERTICAL,5, Color.WHITE));
         File file = new File(cameraPath);
         String[] list = file.list();
-        for (String aList : list) {
-
-            Log.d("obtainCamera", "obtainCamera: "+aList);
-            try {
-                ExifInterface exifInterface = new  ExifInterface(cameraPath+File.separator+aList);
-                String attribute = exifInterface.getAttribute(ExifInterface.TAG_DATETIME);
-                Log.d("obtainCamera", "obtainCamera: "+attribute);
-                photoBeen.add(new PhotoBean(false, cameraPath+File.separator+aList,StrToDate(attribute)));
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-
+        int number = list.length >= 20 ? 20 : list.length;
+        for (int i = 0; i < number; i++) {
+            getPhotoInfo(list[i]);
         }
         Collections.sort(photoBeen);
-        recycler.setAdapter(new CameraAdapter(context,photoBeen));
+        CameraAdapter mAdapter = new CameraAdapter(context, photoBeen, recycler);
+        recycler.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClickListener(View view, int position) {
+                Toast.makeText(context, "点击：position" + position + ",----->" + photoBeen.get(position).getImageResId(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+    private void getPhotoInfo(String aList) {
+        try {
+            ExifInterface exifInterface = new ExifInterface(cameraPath + File.separator + aList);
+            String attribute = exifInterface.getAttribute(ExifInterface.TAG_DATETIME);
+            photoBeen.add(new PhotoBean(false, cameraPath + File.separator + aList, StrToDate(attribute)));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @SuppressLint("SimpleDateFormat")
-    public static Date StrToDate(String str) {
-
-         SimpleDateFormat format = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+    private static Date StrToDate(String str) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
         Date date = null;
         try {
             date = format.parse(str);
@@ -195,6 +231,4 @@ public class EPagerView  implements LoaderManager.LoaderCallbacks<Cursor>{
         }
         return date;
     }
-
-
 }

@@ -21,5 +21,76 @@
 
     </LinearLayout>
 
+    <RadioGroup
+        android:id="@+id/rg"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <RadioButton
+            android:id="@+id/rb_free_line"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/selector_free_line"
+            android:gravity="center"
+            android:text="@string/free_line"
+            android:textColor="@color/bg_text"/>
+
+        <RadioButton
+            android:id="@+id/rb_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/selector_horizontal"
+            android:gravity="center"
+            android:text="@string/horizontal"
+            android:textColor="@color/bg_text"/>
+
+        <RadioButton
+            android:id="@+id/rb_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/selector_vertical"
+            android:gravity="center"
+            android:text="@string/vertical"
+            android:textColor="@color/bg_text"/>
+
+        <RadioButton
+            android:id="@+id/rb_diagonal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/selector_diagonal"
+            android:gravity="center"
+            android:text="@string/diagonal"
+            android:textColor="@color/bg_text"/>
+
+        <RadioButton
+            android:id="@+id/rb_kaleidoscope"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/selector_kaleidoscope"
+            android:gravity="center"
+            android:text="@string/kaleidoscope"
+            android:textColor="@color/bg_text"/>
+
+    </RadioGroup>
+
 
 </LinearLayout>

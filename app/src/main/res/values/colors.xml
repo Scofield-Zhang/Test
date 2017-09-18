@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="color_split_line_d9d9d9">#d9d9d9</color>
     <color name="color_split_line_cccccc">#cccccc</color>
+    <color name="text_hint">#989898</color>
+
+    <color name="purple">#896AED</color>
 </resources>

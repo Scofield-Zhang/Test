@@ -2,4 +2,9 @@
     <string name="app_name">Test</string>
     <string name="album">相册</string>
     <string name="confirm">确认</string>
+    <string name="free_line">自由行</string>
+    <string name="horizontal">水平</string>
+    <string name="vertical">垂直</string>
+    <string name="diagonal">对角</string>
+    <string name="kaleidoscope">万花筒</string>
 </resources>
