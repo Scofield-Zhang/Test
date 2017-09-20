@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleProgressButton">
+        <attr name="idle_text" format="string"/>
+        <attr name="cpb_complete_text" format="string"/>
+        <attr name="cpb_error_text" format="string"/>
+        <attr name="cpb_progress_text" format="string"/>
+        <attr name="cpb_selector_idle" format="reference"/>
+        <attr name="cpb_selector_complete" format="reference"/>
+        <attr name="cpb_selector_error" format="reference"/>
+        <attr name="cpb_colorProgress" format="color"/>
+        <attr name="cpb_paddingProgress" format="dimension"/>
+        <attr name="cpb_strokeWidth" format="dimension"/>
+        <attr name="cpb_strokeColor" format="color"/>
+        <attr name="cpb_cornerRadius" format="dimension"/>
+
+    </declare-styleable>
+</resources>

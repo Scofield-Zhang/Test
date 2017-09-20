@@ -1,1 +1,1 @@
-include ':app', ':testdemo', ':colorpicker'
+include ':app', ':testdemo', ':colorpicker', ':drawablechange'
