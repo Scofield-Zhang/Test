@@ -10,6 +10,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.StateSet;
 
 /**
@@ -53,7 +54,7 @@ public class CircleProgressButton extends android.support.v7.widget.AppCompatBut
     private OnAnimatorEndListener onProgressStateListener = new OnAnimatorEndListener() {
         @Override
         public void OnAnimatorEnd() {
-            mProgressStatus = ProgressStatus.START;
+           // mProgressStatus = ProgressStatus.START;
             mStateManager.checkedState(CircleProgressButton.this);
         }
     };
@@ -203,11 +204,13 @@ public class CircleProgressButton extends android.support.v7.widget.AppCompatBut
     public void setProgress(int progress) {
         mProgress = progress;
 
+        mStateManager.saveProgress(this);
+
         if (mProgress >= START_STATE_PROGRESS) {
             mProgressStatus = ProgressStatus.START;
             // 变形动画
             morphProgress();
-            invalidate();
+            // invalidate();
         } else if (mProgress == ERROR_STATE_PROGRESS) {
             // 下载失败
             mProgressStatus = ProgressStatus.ERROR;
@@ -238,7 +241,6 @@ public class CircleProgressButton extends android.support.v7.widget.AppCompatBut
         animation.setListener(onProgressStateListener);
         animation.start();
     }
-
     private int getNormalColor(ColorStateList mIdleColorStatusList) {
         return mIdleColorStatusList.getColorForState(new int[]{android.R.attr.state_enabled}, 0);
     }
@@ -250,6 +252,9 @@ public class CircleProgressButton extends android.support.v7.widget.AppCompatBut
         animation.setToCornerRadius(toCorner);
         animation.setFromWidth(fromWidth);
         animation.setToWidth(toWidth);
+
+        animation.setPadding(mPaddingProgress);
+
         if (mConfigurationChanged) {
             animation.setDuration(MorphingAnimation.DURATION_INSTANT);
         } else {
@@ -268,6 +273,8 @@ public class CircleProgressButton extends android.support.v7.widget.AppCompatBut
                 int offset = (getWidth() - getHeight()) / 2;
                 int size = getHeight() - mPaddingProgress * 2;
                 mCircleProgressDrawable = new CircleProgressDrawable(size, mStrokeWidth, mStrokeColor);
+                int left = offset + mPaddingProgress;
+                mCircleProgressDrawable.setBounds(left,mPaddingProgress,left,mPaddingProgress);
             }
             float sweepAngle = (360f / mMaxProgress) * mProgress;
             mCircleProgressDrawable.setSweepAngle(sweepAngle);
@@ -278,6 +285,11 @@ public class CircleProgressButton extends android.support.v7.widget.AppCompatBut
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
+
+        initIdleStateDrawable();
+
+        setBackground(mIdleStateDrawable);
+        Log.d("drawableStateChanged", "drawableStateChanged: -------");
     }
 
     public int getProgress() {

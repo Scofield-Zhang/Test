@@ -13,6 +13,7 @@
         android:layout_margin="100dp"
         android:layout_width="200dp"
         app:idle_text="完成"
+        app:cpb_cornerRadius="50dp"
         android:layout_height="50dp"/>
 
 </LinearLayout>

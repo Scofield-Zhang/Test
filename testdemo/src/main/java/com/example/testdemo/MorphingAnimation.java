@@ -17,7 +17,7 @@ import android.widget.TextView;
 public class MorphingAnimation {
 
     public static final int DURATION_NORMAL = 400;
-    public static final int DURATION_INSTANT = 1;
+    public static final int DURATION_INSTANT = 400;
 
     private TextView mView;
 
@@ -33,6 +33,7 @@ public class MorphingAnimation {
     private float mFromCornerRadius;
     private float mToCornerRadius;
     private int mFromColor;
+    private int mToColor;
 
     public void setFromColor(int mFromColor) {
         this.mFromColor = mFromColor;
@@ -42,15 +43,9 @@ public class MorphingAnimation {
         this.mToColor = mToColor;
     }
 
-    private int mToColor;
-
     public MorphingAnimation(TextView textView, StrokeGradientDrawable drawable) {
         mView = textView;
         this.mDrawable = drawable;
-    }
-
-    public void setDrawable(StrokeGradientDrawable mDrawable) {
-        this.mDrawable = mDrawable;
     }
 
     public void setFromWidth(int mFromWidth) {
@@ -89,7 +84,7 @@ public class MorphingAnimation {
         this.mToCornerRadius = mToCornerRadius;
     }
 
-    public void start() {
+    protected void start() {
         final ValueAnimator mValueAnimator = ValueAnimator.ofInt(mFromWidth, mToWidth);
         final GradientDrawable gradientDrawable = mDrawable.getGradientDrawable();
         mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -111,10 +106,12 @@ public class MorphingAnimation {
                     // 得到动画的百分比 设置padding 值
                     padding = (int) (mPadding - mPadding * valueAnimator.getAnimatedFraction());
                 }
-                gradientDrawable.setBounds(leftOffset + padding, padding, rightOffset - padding, mView.getHeight() - padding);
 
+                gradientDrawable.setBounds(leftOffset + padding, padding, rightOffset - padding, mView.getHeight() - padding);
             }
         });
+
+
 
 
         ObjectAnimator bgObjectAnimator = ObjectAnimator.ofInt(gradientDrawable, "color", mFromColor, mToColor);
@@ -128,7 +125,7 @@ public class MorphingAnimation {
 
         AnimatorSet mAnimatorSet = new AnimatorSet();
         mAnimatorSet.setDuration(mDuration);
-        mAnimatorSet.playTogether(bgObjectAnimator, strokeColorAnimator, cornerAnimator);
+        mAnimatorSet.playTogether(mValueAnimator,bgObjectAnimator, strokeColorAnimator, cornerAnimator);
         mAnimatorSet.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
